@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="./library/highlight_ally-light.min.css" />
 
     <!-- custom css -->
-    <link rel="stylesheet" href=" style/style.css" />
+    <link rel="stylesheet" href="style/style.css" />
 
     <!-- tailwind -->
     <script src="./library/tailwind-3.4.1.js"></script>
@@ -178,18 +178,27 @@
     <script src="js/registry.js"></script>
 
     <!-- 게시물 페이지에서만 댓글 섹션 추가 -->
-    <div id="disqus_thread"></div>
+    <div id="disqus_thread" style="display:none;"></div>
     <script>
       var disqus_config = function () {
         this.page.url = window.location.href;  // 현재 페이지의 URL
         this.page.identifier = document.title; // 게시물 제목을 고유 식별자로 사용 (다른 고유 식별자를 사용할 수도 있음)
       };
-      (function() {
-        var d = document, s = d.createElement('script');
-        s.src = 'https://pakko-world.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-      })();
+
+      function isBlogPostPage() {
+        // Check for a specific element or condition that indicates a blog post page
+        return document.querySelector('#contents') !== null;
+      }
+
+      if (isBlogPostPage()) {
+        document.getElementById('disqus_thread').style.display = 'block';
+        (function() {
+          var d = document, s = d.createElement('script');
+          s.src = 'https://pakko-world.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      }
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </body>
